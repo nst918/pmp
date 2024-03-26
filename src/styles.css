@@ -1,0 +1,152 @@
+/* You can add global styles to this file, and also import other style files */
+.p-component-overlay.p-sidebar-mask.p-component-overlay-enter {
+  z-index: 0 !important;
+}
+
+
+.attendance-event,
+.attendance-legend {
+  background-color: #5cd65c;
+  border: 1px solid #5cd65c;
+}
+
+.leave-event,
+.leave-legend {
+  background-color: #cc00ff;
+  border: 1px solid #cc00ff;
+}
+
+.holiday-event,
+.holiday-legend {
+  background-color: #ffa31a;
+  border: 1px solid #ffa31a;
+}
+
+.wfh-event,
+.wfh-legend {
+  background-color: #991616;
+  border: 1px solid #991616;
+}
+
+.outdoor-duty-event,
+.outdoor-duty-legend {
+  background-color: #ff3300;
+  border: 1px solid #ff3300;
+}
+
+.fc-day-sat,
+.fc-day-sun,
+.fc-col-header-cell {
+  background-color: #e6f2ff;
+}
+
+.fc-col-header-cell-cushion,
+.fc-daygrid-day-number {
+  color: black;
+}
+
+header-user-menu {
+  display: flex;
+}
+
+table * {
+  font-size: 14px !important;
+}
+
+table {
+
+  td,
+  th {
+    padding: 0.5rem 1rem !important;
+  }
+}
+
+.bg-gray {
+  background: #e3e3e3;
+  padding: 6px 12px;
+}
+
+.p-inputtext {
+  padding: 0.25rem 0.5rem;
+}
+
+.p-dropdown .p-inputtext {
+  width: 150px;
+}
+
+ul {
+  &.p-dropdown-items, &.p-multiselect-items {
+    padding: 0 !important;
+    margin-bottom: 0.25rem;
+    li {
+      padding: 0.25rem 0.5rem;
+    }
+  }
+}
+
+.p-multiselect-header {
+  padding: 0.25rem 0.5rem;
+}
+
+.p-multiselect-label {
+  max-width: 250px;
+  padding: 0.5rem;
+}
+
+.submitBtn {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  left: 0;
+  padding: 12px;
+  background: whitesmoke;
+  text-align: center;
+}
+
+table * {
+  font-size: 12px !important;
+  padding: 4px 8px !important;
+}
+
+p-dynamicdialog .p-dialog-content project-details section.content {
+  margin: 0 !important;
+}
+
+.p-sidebar .p-sidebar-content {
+  padding: 0;
+}
+
+.p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+  background: #ffffff;
+  border-color: #3B82F6;
+  color: #3B82F6;
+}
+
+.p-tabview .p-tabview-nav li .p-tabview-nav-link {
+  transition: background-color 0.2s, border-color 0.2s, box-shadow 0.2s;
+  border: solid #e5e7eb;
+  border-width: 0 0 2px 0;
+  border-color: transparent transparent #e5e7eb transparent;
+  background: #ffffff;
+  color: #6b7280;
+  padding: 1.25rem;
+  font-weight: 700;
+  border-top-right-radius: 6px;
+  border-top-left-radius: 6px;
+  transition: box-shadow 0.2s;
+  margin: 0 0 -2px 0;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  position: relative;
+  text-decoration: none;
+  overflow: hidden;
+}
+
+.requiredAsterisk:after {
+  content: '*';
+  color: red;
+  margin-left: 8px;
+}

@@ -1,0 +1,293 @@
+﻿<div [@routerTransition]>
+  <p-progressSpinner *ngIf="!projectDetail['ProjectName'], else proDetails" ariaLabel="loading"></p-progressSpinner>
+
+  <ng-template #proDetails>
+
+    <section class="content ms-4 me-4">
+      <div class="row">
+        <div class="col-12 mb-2">
+          <div class="row fw-bolder bg-gray position-relative">
+            Description
+            <button *ngIf = "role == rolePermission.PM" class="btn btn-primary request-btn" (click)="updateWeeklyReport()">Update Weekly Report</button>
+          </div>
+          <div class="row p-3">
+            {{ projectDetail.projectDescription }}
+          </div>
+        </div>
+        <div class="col-12 mb-2">
+          <div class="row fw-bolder bg-gray position-relative">
+            Matrics Dashboard
+          </div>
+          <div class="row">
+            <div class="col-4">
+              <div class="col-12"><strong>Schedule varience</strong></div>
+              <div class="col-12">
+                <div class="col-6">Module name:</div>
+                <div class="col-6"></div>
+              </div>
+              <div class="col-12">
+                <div class="col-6">Planned start date:</div>
+                <div class="col-6"></div>
+              </div>
+              <div class="col-12">
+                <div class="col-6">Planned end date:</div>
+                <div class="col-6"></div>
+              </div>
+              <div class="col-12">
+                <div class="col-6">Revised start date:</div>
+                <div class="col-6"></div>
+              </div>
+              <div class="col-12">
+                <div class="col-6">Revised end date:</div>
+                <div class="col-6"></div>
+              </div>
+              <div class="col-12">
+                <div class="col-6">Actual start date:</div>
+                <div class="col-6"></div>
+              </div>
+              <div class="col-12">
+                <div class="col-6">Actual end date:</div>
+                <div class="col-6"></div>
+              </div>
+              <div class="col-12">
+                <div class="col-6">SV:</div>
+                <div class="col-6"></div>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="col-12"><strong>Effort varience</strong></div>
+              <div class="col-12">
+                <div class="col-6">Module name:</div>
+                <div class="col-6"></div>
+              </div>
+              <div class="col-12">
+                <div class="col-6">Planned Effort:</div>
+                <div class="col-6"></div>
+              </div>
+              <div class="col-12">
+                <div class="col-6">Revised Effort:</div>
+                <div class="col-6"></div>
+              </div>
+              <div class="col-12">
+                <div class="col-6">Actual Effort:</div>
+                <div class="col-6"></div>
+              </div>
+              <div class="col-12">
+                <div class="col-6">EV:</div>
+                <div class="col-6"></div>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="col-12"><strong>DRE</strong></div>
+              <div class="col-12">
+                <div class="col-6">Module name:</div>
+                <div class="col-6"></div>
+              </div>
+              <div *ngIf = "role == rolePermission.PM" class="col-12">
+                <div class="col-6">DRE:</div>
+                <div class="col-6"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="projectDetail.teamDetails && projectDetail.teamDetails.length" class="col-12 mb-2">
+          <div class="row fw-bolder bg-gray position-relative">
+            Team Details
+            <button *ngIf = "role == rolePermission.PM" class="btn btn-primary request-btn" (click)="requestEmployee()">Request Employee</button>
+          </div>
+          <div class="row">
+            <div class="col-6 fw-bold">Employee Name</div>
+            <div class="col-4 fw-bold">Designation</div>
+            <div *ngIf = "role != rolePermission.EMP" class="col-2 fw-bold">Allocation</div>
+          </div>
+          <div class="row" *ngFor="let member of projectDetail.teamDetails">
+            <div class="col-6">{{ member.empName }}</div>
+            <div class="col-4">{{member.designation}}</div>
+            <div *ngIf = "role != rolePermission.EMP" class="col-2">{{member.allocation}}%</div>
+          </div>
+        </div>
+        <div *ngIf = "role != rolePermission.EMP" class="col-12">
+          <div class="row fw-bolder bg-gray position-relative">
+            Other Details
+            <span class="request-btn">
+              <button *ngIf="editMode" class="btn btn-primary me-2" (click)="saveOtherDetails()">Save</button>
+              <button *ngIf="editMode" class="btn btn-primary me-2" (click)="cancelOtherDetails()">Cancel</button>
+              <button *ngIf="!editMode" class="btn btn-primary me-2" (click)="editOtherDetails()">Edit</button>
+              <button *ngIf = "role == rolePermission.PM" class="btn btn-primary" (click)="requestUpdate()">Request Update</button>
+            </span>
+          </div>
+          <form [formGroup]="detailForm">
+            <div class="row mt-1 mb-1">
+              <div class="col-6">Project Type</div>
+              <div class="col-6">
+                {{ projectDetail.projectType? projectDetail.projectType?.name : '' }}
+                <!-- <p-dropdown formControlName="projectType" [options]="projectTypes" optionLabel="name"
+                  placeholder="Select Project Type"></p-dropdown> -->
+              </div>
+            </div>
+            <div class="row mt-1 mb-1">
+              <div class="col-6">Client Project Sector Type</div>
+              <div class="col-6">
+                {{ projectDetail.clientProjectSectorType }}
+                <!-- <input pInputText type="text" class="p-inputtext-sm" formControlName="clientProjectSectorType" /> -->
+              </div>
+            </div>
+            <div class="row mt-1 mb-1">
+              <div class="col-6">Project Domain</div>
+              <div class="col-6">
+                {{ projectDetail.projectDomain }}
+                <!-- <input pInputText type="text" class="p-inputtext-sm" formControlName="projectDomain" /> -->
+              </div>
+            </div>
+            <div class="row mt-1 mb-1">
+              <div class="col-6">Onsite PM</div>
+              <div class="col-6">
+                {{ projectDetail.OnsitePM? projectDetail.OnsitePM?.name : '' }}
+                <!-- <p-dropdown formControlName="OnsitePM" [options]="onsiteProjectMnagers" optionLabel="name"
+                  placeholder="Select"></p-dropdown> -->
+              </div>
+            </div>
+            <div class="row mt-1 mb-1">
+              <div class="col-6">Offshore PM</div>
+              <div class="col-6">
+                {{ projectDetail.OffshorePM? projectDetail.OffshorePM?.name : '' }}
+                <!-- <p-dropdown formControlName="OffshorePM" [options]="offshoreProjectMnagers" optionLabel="name"
+                  placeholder="Select"></p-dropdown> -->
+              </div>
+            </div>
+            <div class="row mt-1 mb-1">
+              <div class="col-6">Current Phase</div>
+              <div class="col-6">
+                <span *ngIf="!editMode">{{ projectDetail.CurrentPhase }}</span>
+                <p-dropdown *ngIf="editMode" formControlName="CurrentPhase" [options]="projectPhase"
+                  placeholder="Select"></p-dropdown>
+              </div>
+            </div>
+            <div class="row mt-1 mb-1">
+              <div class="col-6">Project Start Date</div>
+              <div class="col-6">
+                <span *ngIf="!editMode">{{ projectDetail.ProjectStartDate | date: 'dd-mm-yyyy' }}</span>
+                <p-calendar *ngIf="editMode" formControlName="ProjectStartDate"></p-calendar>
+              </div>
+            </div>
+            <div class="row mt-1 mb-1">
+              <div class="col-6">Project End Date</div>
+              <div class="col-6">
+                <span *ngIf="!editMode">{{ projectDetail.ProjectExpectedEndDate | date: 'dd-mm-yyyy' }}</span>
+                <p-calendar *ngIf="editMode" formControlName="ProjectExpectedEndDate"></p-calendar>
+              </div>
+            </div>
+            <div class="row mt-1 mb-1">
+              <div class="col-6">Project Man Days</div>
+              <div class="col-6">
+                <span *ngIf="!editMode">{{ projectDetail.ProjectManDays }} Week(s)</span>
+                <p-inputNumber *ngIf="editMode" formControlName="ProjectManDays" [min]="1"></p-inputNumber>
+              </div>
+            </div>
+            <div class="row mt-1 mb-1">
+              <div class="col-6">Development Methodology</div>
+              <div class="col-6">
+                {{ projectDetail.devMethod }}
+              </div>
+            </div>
+            <div class="row mt-1 mb-1">
+              <div class="col-6">Account Manager</div>
+              <div class="col-6">
+                {{ projectDetail.accountManager }}
+              </div>
+            </div>
+            <div class="row mt-1 mb-1">
+              <div class="col-6">Revised Start Date</div>
+              <div class="col-6">
+                {{ projectDetail.revisedStartDate }}
+              </div>
+            </div>
+            <div class="row mt-1 mb-1">
+              <div class="col-6">Revised End Date</div>
+              <div class="col-6">
+                {{ projectDetail.revisedEndDate }}
+              </div>
+            </div>
+            <div class="row mt-1 mb-1">
+              <div class="col-6">Projected Hours</div>
+              <div class="col-6">
+                {{ projectDetail.projectedHours }}
+              </div>
+            </div>
+            <div class="row mt-1 mb-1">
+              <div class="col-6">Actual Hours</div>
+              <div class="col-6">
+                {{ projectDetail.actualHours }}
+              </div>
+            </div>
+            <div class="row mt-1 mb-1">
+              <div class="col-6">RAG Schedule</div>
+              <div class="col-6">
+                {{ projectDetail.RAGSchedule }}
+              </div>
+            </div>
+            <div class="row mt-1 mb-1">
+              <div class="col-6">RAG Scope</div>
+              <div class="col-6">
+                {{ projectDetail.RAGScope }}
+              </div>
+            </div>
+            <div class="row mt-1 mb-1">
+              <div class="col-6">RAG Effort</div>
+              <div class="col-6">
+                {{ projectDetail.RAGEffort }}
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </ng-template>
+</div>
+
+<p-dialog header="Update Details" [(visible)]="showDetailUpdateForm" [style]="{width: '80vw', height: '100vh'}">
+  <div class="row">
+    <div class="col-4">Select Field(s) to Update</div>
+    <div class="col-6">
+      <p-dropdown [options]="updateFields" placeholder="Select" [(ngModel)]="selectedField" optionLabel="label"></p-dropdown>
+    </div>
+    <div class="col-2"><button class="btn btn-success" (click)="updateForm()">Add</button></div>
+  </div>
+
+  <form [formGroup]="projectUpdateForm" class="mt-4 mb-2">
+    <div class="row m-2" *ngFor="let control of selectedFields;">
+      <div class="col-4">{{control.label}}</div>
+      <div class="col-6">
+        <ng-container *ngIf = "control.type == 'dd'">
+          <p-dropdown [options]="control.values" placeholder="Select" [formControlName]="control.name" optionLabel="name"></p-dropdown>
+        </ng-container>
+        <ng-container *ngIf = "control.type == 'text'">
+          <input pInputText type="text" class="p-inputtext-sm" placeholder="" [formControlName]="control.name" />
+        </ng-container>
+        <ng-container *ngIf = "control.type == 'number'">
+          <p-inputNumber [formControlName]="control.name" [min]="0"></p-inputNumber>
+        </ng-container>
+        <ng-container *ngIf = "control.type == 'date'">
+           <p-calendar formControlName="control.name"></p-calendar>
+        </ng-container>
+      </div>
+      <div class="col-2 position-relative">
+        <i class="fa-solid fa-xmark" (click)="removeField(control)"></i>
+      </div>
+      <div class="offset-4 col-6">
+        <app-form-field-error [_control]="getControl(control.name)" [submitted]="isSubmitted">
+        </app-form-field-error>
+      </div>
+    </div>
+
+    <div *ngIf="selectedFields.length" class="row m-2">
+      <div class="col-12">Comment</div>
+      <div class="col-12">
+        <textarea class="w-100" placeholder="Type here..." formControlName="comment"></textarea>
+      </div>
+    </div>
+  </form>
+  <div *ngIf="selectedFields.length" class="col-12 submitBtn">
+    <button class="btn btn-success w-50" (click)="submitRequest()">Submit</button>
+  </div>
+</p-dialog>

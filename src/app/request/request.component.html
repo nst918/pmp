@@ -1,0 +1,67 @@
+<div [@routerTransition]>
+    <section class="content ms-4 me-4">
+        <div class="row">
+            <div class="col-12 mb-2">
+                <div class="row fw-bolder bg-gray position-relative">
+                    Requests
+                </div>
+            </div>
+            <div class="col-12 mb-2">
+                <div class="row" *ngFor="let request of requests.data">
+                    <div class="col-12 fw-bolder bg-gray position-relative">
+                        {{ request.department }}
+                    </div>
+                    <div class="col-12 p-0" *ngFor="let record of request.records">
+                        <p-panel header="Project Name: {{ record.projectName }}" [toggleable]="true" [collapsed]="true">
+                            <p-tabView>
+                                <p-tabPanel header="Allocation Request">
+                                    <ng-container *ngFor="let req of record.request">
+                                        <div *ngIf="req.type == '1'" class="row mb-2">
+                                            <div class="col-2">{{req.empName}}</div>
+                                            <div class="col-2">{{req.allocationRequired}}</div>
+                                            <div class="col-2">{{req.fromDate}}</div>
+                                            <div class="col-2">{{req.toDate}}</div>
+                                            <div class="col-2">{{req.toDate}}</div>
+                                            <div class="col-2 d-flex">
+                                                <button class="btn btn-success me-1" (click)="acceptRequest(req)">Accept</button>
+                                                <button class="btn btn-danger" (click)="decline(req)">Decline</button>
+                                            </div>                                            
+                                            <div class="row mb-2 d-block" *ngIf = "req.message"><strong>Message:</strong> {{ req.message }}</div>
+                                        </div>
+                                    </ng-container>
+                                </p-tabPanel>
+                                <p-tabPanel header="Field Update Request">
+                                    <ng-container *ngFor="let req of record.request">
+                                        <ng-container *ngIf="req.type == '2'">
+                                            <div class="row mb-2" *ngFor="let field of req.fields">
+                                                <div class="col-4">{{field.key}}</div>
+                                                <div class="col-4">{{field.value}}</div>
+                                                <div class="col-4">
+                                                    <button class="btn btn-success me-1" (click)="acceptRequest(req)">Accept</button>
+                                                    <button class="btn btn-danger" (click)="decline(req)">Decline</button>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-2 d-block" *ngIf = "req.message"><strong>Message:</strong> {{ req.message }}</div>
+                                        </ng-container>
+                                    </ng-container>
+                                </p-tabPanel>
+                            </p-tabView>
+                        </p-panel>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<p-confirmDialog>
+    <ng-template pTemplate="header">
+        Decline Reason
+    </ng-template>
+    <ng-template pTemplate="message">
+        <div><textarea [(ngModel)]="declineReason" cols="30" rows="10"></textarea></div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <div><button class="btn btn-danger" (click)="accept()">Decline</button></div>
+    </ng-template>
+</p-confirmDialog>

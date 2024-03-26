@@ -1,0 +1,56 @@
+﻿<div [@routerTransition]>
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <h1>My Attandance</h1>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="content px-2">
+    <div class="container-fluid">
+      <div class="card" [formGroup]="dateForm">
+        <div class="card-body">
+          <div class="row mb-2">
+            <div class="row col-12">
+              <div class="col-6 col-xs-12">
+                <p-calendar [maxDate]="maxDate" (onSelect)="getDate($event, 'startDate')" [readonlyInput]="true" formControlName="startDate"
+                  dateFormat="dd/mm/yy" [iconDisplay]="'input'" [showIcon]="true"></p-calendar>
+              </div>
+              <div class="col-6 col-xs-12">
+                <p-calendar [maxDate]="maxDate" (onSelect)="getDate($event, 'endDate')" [readonlyInput]="true" formControlName="endDate"
+                  dateFormat="dd/mm/yy" [iconDisplay]="'input'" [showIcon]="true"></p-calendar>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-4">
+            <div class="col-12">
+              <button class="btn btn-success" type="submit" (click)="getAttendance()">Generate Report</button>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12">
+              <label>Average Working Hours :</label>
+              <label id="lblAverageTime">{{ avgWorkingHours }}</label>
+            </div>
+            <div class="col-12">
+              <b style="float: left;">Legends :</b>
+              <ul class="legend">
+                <li><span class="attendance-legend"></span>Attendance</li>
+                <li><span class="leave-legend"></span>Leave</li>
+                <li><span class="holiday-legend"></span>Holiday</li>
+                <li><span class="wfh-legend"></span>Work From Home</li>
+                <li><span class="outdoor-duty-legend"></span>Outdoor Duty</li>
+              </ul>
+            </div>
+          </div>
+
+          <full-calendar #fullCalendar [options]="calendarOptions"></full-calendar>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

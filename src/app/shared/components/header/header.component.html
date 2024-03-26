@@ -1,0 +1,27 @@
+<header class="header w-100 header-bg">
+  <div class="row mx-0 p-0 inner">
+    <div class="col my-2 ms-4 logo position-relative">
+      <p-button *ngIf="userData?.tenantId" type="button" class="mr-2" (click)="sidebarVisible1 = true">
+        <i class="fa-solid fa-bars"></i>
+      </p-button>
+      <p class="tks start-1">Project Management System</p>
+    </div>
+    <div class="d-flex col userName justify-content-end p-2 me-3">
+      <div class="text-end pt-1">
+        <span class="border-bottom user-wlcme-name pl-1">{{userData?.name}}</span>
+        <button class="btn btn-primary" (click)="loginUser()" *ngIf="!userData?.tenantId">Login</button>
+        <button class="btn btn-primary" (click)="logoutUser()" *ngIf="userData?.tenantId">Logout</button>
+      </div>
+    </div>
+  </div>
+  <p-sidebar [(visible)]="sidebarVisible1" position="left">
+    <ul class="side-bar-links p-0">
+      <li><a (click)="sidebarVisible1 = false;" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Home</a></li>
+      <li><a (click)="sidebarVisible1 = false;" routerLink="/my-attendance" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Attendance</a></li>
+      <li><a (click)="sidebarVisible1 = false;" routerLink="/projects" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Project Management</a></li>
+      <li *ngIf = "getRole() != rolePermission.EMP"><a (click)="sidebarVisible1 = false;" routerLink="/report" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Project Report</a></li>
+      <li *ngIf = "getRole() == rolePermission.PMO"><a (click)="sidebarVisible1 = false;" routerLink="/requests" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Approve/Decline Requests</a></li>
+      <li *ngIf = "getRole() == rolePermission.PMO"><a (click)="sidebarVisible1 = false;" routerLink="/resource-sheet" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Approve/Decline Requests</a></li>
+    </ul>
+  </p-sidebar>
+</header>

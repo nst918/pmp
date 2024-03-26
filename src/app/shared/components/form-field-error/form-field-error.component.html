@@ -1,0 +1,20 @@
+<div *ngIf = "(_control.errors && (_control.touched || _control.dirty || submitted) && _control.invalid)">
+    <small *ngIf = "_control.errors.required">
+        {{ messageConstants.Required_Validation }}
+    </small>
+    <small *ngIf = "_control.errors.minlength">
+        {{ messageConstants.Min_Char_Validation }} : {{_control.errors.minlength.requiredLength}}
+    </small>
+    <small *ngIf = "_control.errors.maxlength">
+        {{ messageConstants.Max_Char_Validation }} : {{_control.errors.maxlength.requiredLength}}
+    </small>
+    <small *ngIf = "_control.errors.min">
+        {{ messageConstants.Min_Value_Validation }} : {{_control.errors.min.min}}
+    </small>
+    <small *ngIf = "_control.errors.max">
+        {{ messageConstants.Max_Value_Validation }} : {{_control.errors.max.max}}
+    </small>
+    <small *ngIf = "_control.errors.pattern">
+        {{ messageConstants.Numeric_Field_Validation }}
+    </small>
+</div>

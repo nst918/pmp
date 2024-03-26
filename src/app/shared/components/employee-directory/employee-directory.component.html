@@ -1,0 +1,39 @@
+<form [formGroup]="empForm">
+  <div class="row mb-4">
+    <label class="col-12">Search Employee by Name or Skill</label>
+    <p-autoComplete 
+      formControlName="selectedEmp" 
+      [suggestions]="filteredEmp" 
+      (completeMethod)="filterEmp($event)" 
+      field="name"
+      [forceSelection]="true"
+      (onSelect)="emitSelected($event)">
+    </p-autoComplete>
+  </div>
+
+  <div class="row mb-4" *ngIf = "askAllocation">
+    <label class="col-12">Allocation</label>
+    <p-inputNumber suffix="%" formControlName="allocationPercent" inputId="minmax" mode="decimal" [min]="0" [max]="100"> </p-inputNumber>
+  </div>
+  
+  <div class="row mb-4">
+    <label class="col-12">From Date</label>
+    <p-calendar appendTo="body" formControlName="fromDate"></p-calendar>
+  </div>
+  
+  <div class="row mb-4">
+    <label class="col-12">Till Date</label>
+    <p-calendar appendTo="body" formControlName="tillDate"></p-calendar>
+  </div>
+
+  <div class="row mb-4">
+    <div class="col-12">Comment</div>
+    <div class="col-12">
+      <textarea class="w-100" placeholder="Type here..." formControlName="comment"></textarea>
+    </div>
+  </div>
+
+  <div class="col-12 text-center">
+    <button [disabled]="empForm.invalid" type="button" class="btn btn-success" (click)="request()">Submit</button>
+  </div>
+</form>
