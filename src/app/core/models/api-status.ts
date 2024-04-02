@@ -50,3 +50,39 @@ export class DependencyModel {
     owner: string;
     etd: string;
 }
+
+export class resourceSheetModel {
+    EmpID: string;
+    EmployeeName: string;
+    DOJ: string;
+    OverallExp: string;
+    ReportingTo: string;
+    ManagerforHRMS: string;
+    Designation: string;
+    ProjectFunctionName: string;
+    GTGOrgActivities: string;
+    ProjectType: string;
+    Location: string;
+    EmploymentType: string;
+    Trainee: string;
+    Shared: string;
+    RoleLevel: string;
+    Client: string;
+    Competency: string;
+    PrimarySkills: string;
+    SecondarySkills: string;
+    Billable: string;
+    Billed: string;
+    DepartmentName: string;
+    FunctionName: string;
+    NSTExp: string;
+    NSTExpasNum: string;
+    Expatthetimeofhiring: string;
+    PercentageAllocation: string;
+    FromDate: string;
+    ToDate: string;
+    Today: string;
+    NOD: string;
+    WorkingHours: string;
+    Remarks: string;
+}

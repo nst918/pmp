@@ -65,20 +65,40 @@
 
 <div class="card m-4">
     <div class="col-12">
-        <p-table [columns]="columns" [value]="resourceData">
+        <p-table [columns]="columns" [value]="resourceData" [globalFilterFields]="['EmpID','EmployeeName']" responsiveLayout="scroll">
             <ng-template pTemplate="header" let-columns>
-            <tr>
-                <th *ngFor="let col of columns">
-                {{ col.header }}
-                </th>
-            </tr>
+                <tr>
+                    <th *ngFor="let col of columns">
+                        <div class="d-flex justify-content-center align-items-center">
+                            {{ col.header }}
+                            <p-columnFilter [showMatchModes]="false" [showOperator]="false" [showAddButton]="false"
+                                matchMode="in" type="text" [field]="col.field" display="menu">
+                                <ng-template pTemplate="header">
+                                    <div class="p-px-3 p-pt-3 p-pb-0">
+                                        <span class="p-text-bold">Select</span>
+                                    </div>
+                                </ng-template>
+                                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                    <p-multiSelect [ngModel]="value" [options]="getOptions(col.field)" placeholder="Any"
+                                        (onChange)="filter($event.value)">
+                                        <ng-template let-option pTemplate="item">
+                                            <div class="p-multiselect-representative-option">
+                                                <span class="p-ml-1">{{option}}</span>
+                                            </div>
+                                        </ng-template>
+                                    </p-multiSelect>
+                                </ng-template>
+                            </p-columnFilter>
+                        </div>
+                    </th>
+                </tr>
             </ng-template>
             <ng-template pTemplate="body" let-rowData let-columns="columns">
-            <tr>
-                <td *ngFor="let col of columns">
-                {{ rowData[col.field] }}
-                </td>
-            </tr>
+                <tr>
+                    <td *ngFor="let col of columns">
+                        {{ rowData[col.field] }}
+                    </td>
+                </tr>
             </ng-template>
         </p-table>
     </div>

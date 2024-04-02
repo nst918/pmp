@@ -150,3 +150,15 @@ p-dynamicdialog .p-dialog-content project-details section.content {
   color: red;
   margin-left: 8px;
 }
+
+p-columnfilter {
+  display: contents;
+  filtericon.p-element.p-icon-wrapper {
+    svg {
+        display: none;
+    }
+    &:after {
+        content: '\e94c';
+    }
+  }
+}

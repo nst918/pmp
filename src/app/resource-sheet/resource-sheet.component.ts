@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AddEmployeeComponent } from '../add-employee/add-employee.component';
+import { resourceSheetModel } from '../core/models/api-status';
 
 @Component({
   selector: 'app-resource-sheet',
@@ -12,7 +13,7 @@ export class ResourceSheetComponent implements OnInit {
   searchCriteria: FormGroup;
   maxDate: Date= new Date();
 
-  resourceData: Array<{}>= [
+  resourceData: Array<resourceSheetModel>= [
     {EmpID: 'NST/31',EmployeeName: 'Saket Madan',DOJ: '1 June 2006',OverallExp: '23.9',ReportingTo: 'Manish Sehgal',ManagerforHRMS: 'Manish Sehgal',Designation: 'IT Head - India Operations',ProjectFunctionName: 'IT Support',GTGOrgActivities: 'NST Managed (SVAM)',ProjectType: 'India',Location: 'Permanent',EmploymentType: 'No',Trainee: 'No',Shared: 'P05',RoleLevel: 'SVAM',Client: 'IT Support',Competency: 'IT Support',PrimarySkills: 'Billable',SecondarySkills: '',Billable: 'Not Billed',Billed: 'Operation Team',DepartmentName: 'IT Support',FunctionName: '17.9',NSTExp: '17.9',NSTExpasNum: '6',Expatthetimeofhiring: '1',PercentageAllocation: '01-Dec-22',FromDate: '31-Dec-24',ToDate: '',Today: '',NOD: '',WorkingHours: '',Remarks: ''},
     {EmpID: 'NST/72',EmployeeName: 'Anand Nagpal',DOJ: '29 May 2007',OverallExp: '16.9',ReportingTo: 'Aditya Kumar',ManagerforHRMS: 'Aditya Kumar',Designation: 'Technical Project Manager',ProjectFunctionName: 'State Aid Modernization',GTGOrgActivities: '',ProjectType: 'NST Managed (SVAM)',Location: 'India',EmploymentType: 'Permanent',Trainee: 'No',Shared: 'Yes',RoleLevel: 'P05',Client: 'SCA',Competency: 'Project Management',PrimarySkills: 'C# ASP .Net MVC , .Net Core',SecondarySkills: '.Net',Billable: 'Billable',Billed: 'Billed',DepartmentName: 'Solution Team',FunctionName: 'Delivery Team',NSTExp: '16.9',NSTExpasNum: '16.9',Expatthetimeofhiring: '0',PercentageAllocation: '0.1',FromDate: '01-May-23',ToDate: '30-Apr-24',Today: '21-Mar-24',NOD: '40.00',WorkingHours: '232.00',Remarks: ''}
   ]
@@ -105,6 +106,10 @@ export class ResourceSheetComponent implements OnInit {
       header: 'Employee Details',
       width: '80vw'
     });
+  }
+
+  getOptions(fieldName: string) {
+    return this.resourceData.map((obj: any)=>{return obj[fieldName]});
   }
 
 }
