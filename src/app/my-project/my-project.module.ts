@@ -13,9 +13,10 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 import { MultiSelectModule } from 'primeng/multiselect';
-import { FormFieldErrorModule } from '../shared/components/form-field-error/form-field-error.module';
-import { EmployeeDirectoryComponent } from '../shared/components/employee-directory/employee-directory.component';
+// import { FormFieldErrorModule } from '../shared/components/form-field-error/form-field-error.module';
+// import { EmployeeDirectoryComponent } from '../shared/components/employee-directory/employee-directory.component';
 import { WeeklyReportComponent } from './weekly-report/weekly-report.component';
+import { FormFieldErrorComponent } from '../shared/components/form-field-error/form-field-error.component';
 
 const routes: Routes= [
   { path: '', component: MyProjectComponent },
@@ -39,8 +40,9 @@ const routes: Routes= [
     InputTextModule,
     DropdownModule,
     MultiSelectModule,
-    FormFieldErrorModule,
-    EmployeeDirectoryComponent
+    // FormFieldErrorModule,
+    FormFieldErrorComponent,
+    // EmployeeDirectoryComponent
 
   ]
 })

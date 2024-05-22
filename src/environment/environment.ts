@@ -13,5 +13,5 @@ export const environment= {
     // tenantId: 'b2183828-8e6c-4cb5-b7b7-7211ac8de809',
     // consentScopes: ['user.read', 'api://5b4043db-cd84-4990-a163-6aea931feb0b/access_as_user'],
     // scopes: ['api://5b4043db-cd84-4990-a163-6aea931feb0b/access_as_user'],
-    apiEndPoint: 'https://hrms.svamindia.com/'
+    apiEndPoint: 'https://iportal.svam.com/api/'
 }

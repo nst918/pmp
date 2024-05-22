@@ -1,17 +1,21 @@
 ﻿<div [@routerTransition]>
-  <p-progressSpinner *ngIf="!projectDetail['ProjectName'], else proDetails" ariaLabel="loading"></p-progressSpinner>
+  <p-progressSpinner class="position-center" *ngIf="!projectDetail['projName'], else proDetails" ariaLabel="loading"></p-progressSpinner>
 
   <ng-template #proDetails>
 
     <section class="content ms-4 me-4">
       <div class="row">
         <div class="col-12 mb-2">
+          {{ projectDetail.projName }} ({{ projectDetail.pCode }})
+        </div>
+        <div class="col-12 mb-2">
           <div class="row fw-bolder bg-gray position-relative">
             Description
             <button *ngIf = "role == rolePermission.PM" class="btn btn-primary request-btn" (click)="updateWeeklyReport()">Update Weekly Report</button>
           </div>
-          <div class="row p-3">
-            {{ projectDetail.projectDescription }}
+          <div class="row">
+            <div [innerHTML]="projectDetail.projDesc"></div>
+            <div [innerHTML]="projectDetail.scope"></div>
           </div>
         </div>
         <div class="col-12 mb-2">
@@ -90,10 +94,10 @@
             </div>
           </div>
         </div>
-        <div *ngIf="projectDetail.teamDetails && projectDetail.teamDetails.length" class="col-12 mb-2">
+        <div class="col-12 mb-2">
           <div class="row fw-bolder bg-gray position-relative">
             Team Details
-            <button *ngIf = "role == rolePermission.PM" class="btn btn-primary request-btn" (click)="requestEmployee()">Request Employee</button>
+            <!-- <button *ngIf = "role == rolePermission.PM" class="btn btn-primary request-btn" (click)="requestEmployee()">Request Employee</button> -->
           </div>
           <div class="row">
             <div class="col-6 fw-bold">Employee Name</div>
@@ -120,7 +124,9 @@
             <div class="row mt-1 mb-1">
               <div class="col-6">Project Type</div>
               <div class="col-6">
-                {{ projectDetail.projectType? projectDetail.projectType?.name : '' }}
+                {{projectDetail.projectType}}
+                {{ getProjectType(projectDetail.projectType) }}
+                <!-- {{ projectDetail.projectType? projectDetail.projectType?.name : '' }} -->
                 <!-- <p-dropdown formControlName="projectType" [options]="projectTypes" optionLabel="name"
                   placeholder="Select Project Type"></p-dropdown> -->
               </div>
@@ -128,7 +134,7 @@
             <div class="row mt-1 mb-1">
               <div class="col-6">Client Project Sector Type</div>
               <div class="col-6">
-                {{ projectDetail.clientProjectSectorType }}
+                {{ projectDetail.projectSector }}
                 <!-- <input pInputText type="text" class="p-inputtext-sm" formControlName="clientProjectSectorType" /> -->
               </div>
             </div>

@@ -52,8 +52,9 @@ export class DependencyModel {
 }
 
 export class resourceSheetModel {
-    EmpID: string;
+    employeeId: string;
     EmployeeName: string;
+    email: string;
     DOJ: string;
     OverallExp: string;
     ReportingTo: string;

@@ -3,8 +3,8 @@ import { appModuleAnimation } from '../../shared/animations/routerTransition';
 import { ProjectDetailsService } from '../project-details.service'
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DialogService, DynamicDialogComponent, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { EmployeeDirectoryComponent } from '../../shared/components/employee-directory/employee-directory.component';
-import { rolePermission } from '../../core/constants/constants';
+// import { EmployeeDirectoryComponent } from '../../shared/components/employee-directory/employee-directory.component';
+import { possibleProjectTypes, rolePermission } from '../../core/constants/constants';
 import { WeeklyReportComponent } from '../weekly-report/weekly-report.component';
 import { ProjectSummaryIQMSDto, reportModel } from '../../core/models/api-status';
 import { NgxPubSubService } from '@pscoped/ngx-pub-sub';
@@ -49,6 +49,7 @@ export class ProjectDetailsComponent implements OnInit {
 
   projectId: string;
   rolePermission= rolePermission;
+  possibleProjectTypes= possibleProjectTypes;
   role: string= rolePermission.EMP;
 
   teamCols: Array<{}> = [
@@ -57,68 +58,70 @@ export class ProjectDetailsComponent implements OnInit {
     {field: 'designation', header: 'Designation'}
   ]
 
-  projectDetail: any = {
-    id: '3',
-    ClientName: 'SCA',
-    ProjectName: 'ABC',
-    OnsitePM: {type: 2, name: 'Mridul'},
-    OffshorePM: {type: 14, name: 'Prachi'},
-    CurrentPhase: 'Testing',
+  projectDetail: any = {};
+  // projectDetail: any = {
+  //   id: '3',
+  //   ClientName: 'SCA',
+  //   pCode: 'ABC',
+  //   projName: 'ABC',
+  //   OnsitePM: {type: 2, name: 'Mridul'},
+  //   OffshorePM: {type: 14, name: 'Prachi'},
+  //   CurrentPhase: 'Testing',
     
-    RAG_Scope: '',
-    RAG_Schedule: '',
-    RAG_Effort: '',
+  //   RAG_Scope: '',
+  //   RAG_Schedule: '',
+  //   RAG_Effort: '',
 
-    ProjectStatusSummary: '',
-    ProjectStartDate: new Date('01/16/2024'),
-    PlanGoLiveDate: '',
-    ActualGoLiveDate: '',
-    PlannedEffort: '',
-    ActualEffortInception: '',
-    EstimationToComplete: '',
-    EtcDate: '',
-    ExpectedAtCompletion: '',
-    Variance: '',
-    AvgExp: '',
-    Remarks: '',
-    projectType: {type: 1, name: 'Fixed'},
-    projectDescription: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-    teamDetails: [
-      { empCode: '1', empName: 'Rahul Mishra', allocation: '100', designation: 'Angular Developer' },
-      { empCode: '2', empName: 'Punit Singh', allocation: '100', designation: '.Net Developer' },
-      { empCode: '3', empName: 'Manish Thakur', allocation: '50', designation: 'Tester' },
-      { empCode: '4', empName: 'Manasvi Kauts', allocation: '50', designation: 'BA' },
-      { empCode: '5', empName: 'Ankit Birla', allocation: '50', designation: 'Angular Developer' }
-    ],
-    OverallProjectRAG_status: '',
-    projectStatus: '',
-    forecastedEffort: '',
-    clientProjectSectorType: 'Healthcare',
-    projectDomain: 'RPA',
-    devMethod: 'Agile',
-    CustomerName: 'Northwell Health, Inc.',
-    CustomerAddress: '450 Lakeville Rd, New Hyde Park, New York, 11042, United States',
-    ClientContactPersonName: 'Kamel, Abdul-Rassoul',
-    ClientContactPersonEmail: 'kabdulrassoul@northwell.edu',
-    ClientDesignatedPMName: 'Viralkumar Shah',
-    ClientDesignatedPMEmail: 'vshah16@northwell.edu',
-    ProjectManagedBy: 'SVAM',
-    ProjectBriefDescription: '',
-    ProjectEnvironment: 'RPA (UiPath)',
-    ProjectBriefScope: 'Reading fields and invoices from internal Northwell application (Unifier) and creating the requisite information in PeopleSoft',
-    TotalProjectValue: '$58,040',
-    ProjectExpectedEndDate: new Date('04/19/2024'),
-    ProjectManDays: '14',
-    OnshoreProjectManager: {type: 2, name: 'Mridul'},
-    OffshoreProjectManager: {type: 14, name: 'Prachi'},
-    SVAMDesignatedOnshorePMName: '',
-    SVAMDesignatedOffshorePMName: '',
-    ProjectLead: 'Shailendra Pal (Northwell)',
-    ProjectCharterApproval: '',
-    ProjectCharterReviewer: '',
-    Milestone: '1) Robot capable of reading fields in Unifier and filling fields in PeopleSoft. 2) Robot capable of reading 20 invoice types',
-    Risk: '1) Delay in Infra access. 2) Delay in UAT and SIT'
-  };
+  //   ProjectStatusSummary: '',
+  //   ProjectStartDate: new Date('01/16/2024'),
+  //   PlanGoLiveDate: '',
+  //   ActualGoLiveDate: '',
+  //   PlannedEffort: '',
+  //   ActualEffortInception: '',
+  //   EstimationToComplete: '',
+  //   EtcDate: '',
+  //   ExpectedAtCompletion: '',
+  //   Variance: '',
+  //   AvgExp: '',
+  //   Remarks: '',
+  //   projectType: {type: 1, name: 'Fixed'},
+  //   projDesc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+  //   teamDetails: [
+  //     { empCode: '1', empName: 'Rahul Mishra', allocation: '100', designation: 'Angular Developer' },
+  //     { empCode: '2', empName: 'Punit Singh', allocation: '100', designation: '.Net Developer' },
+  //     { empCode: '3', empName: 'Manish Thakur', allocation: '50', designation: 'Tester' },
+  //     { empCode: '4', empName: 'Manasvi Kauts', allocation: '50', designation: 'BA' },
+  //     { empCode: '5', empName: 'Ankit Birla', allocation: '50', designation: 'Angular Developer' }
+  //   ],
+  //   OverallProjectRAG_status: '',
+  //   projectStatus: '',
+  //   forecastedEffort: '',
+  //   clientProjectSectorType: 'Healthcare',
+  //   projectDomain: 'RPA',
+  //   devMethod: 'Agile',
+  //   CustomerName: 'Northwell Health, Inc.',
+  //   CustomerAddress: '450 Lakeville Rd, New Hyde Park, New York, 11042, United States',
+  //   ClientContactPersonName: 'Kamel, Abdul-Rassoul',
+  //   ClientContactPersonEmail: 'kabdulrassoul@northwell.edu',
+  //   ClientDesignatedPMName: 'Viralkumar Shah',
+  //   ClientDesignatedPMEmail: 'vshah16@northwell.edu',
+  //   ProjectManagedBy: 'SVAM',
+  //   ProjectBriefDescription: '',
+  //   ProjectEnvironment: 'RPA (UiPath)',
+  //   ProjectBriefScope: 'Reading fields and invoices from internal Northwell application (Unifier) and creating the requisite information in PeopleSoft',
+  //   TotalProjectValue: '$58,040',
+  //   ProjectExpectedEndDate: new Date('04/19/2024'),
+  //   ProjectManDays: '14',
+  //   OnshoreProjectManager: {type: 2, name: 'Mridul'},
+  //   OffshoreProjectManager: {type: 14, name: 'Prachi'},
+  //   SVAMDesignatedOnshorePMName: '',
+  //   SVAMDesignatedOffshorePMName: '',
+  //   ProjectLead: 'Shailendra Pal (Northwell)',
+  //   ProjectCharterApproval: '',
+  //   ProjectCharterReviewer: '',
+  //   Milestone: '1) Robot capable of reading fields in Unifier and filling fields in PeopleSoft. 2) Robot capable of reading 20 invoice types',
+  //   Risk: '1) Delay in Infra access. 2) Delay in UAT and SIT'
+  // };
 
   refComp: DynamicDialogRef | undefined;
 
@@ -159,13 +162,13 @@ export class ProjectDetailsComponent implements OnInit {
     {right: rolePermission.PM, name: 'forecastedEffort', label: 'Forecasted Effort', type: 'number'},
     {right: rolePermission.PMO, name: 'CustomerName', label: 'Customer Name', type: 'text'},
     {right: rolePermission.PMO, name: 'CustomerAddress', label: 'Customer Address', type: 'text'},
-    {right: rolePermission.PMO, name: 'clientProjectSectorType', label: 'Client Project Sector Type', type: 'text'},
+    {right: rolePermission.PMO, name: 'projectSector', label: 'Client Project Sector Type', type: 'text'},
     {right: rolePermission.PMO, name: 'ClientContactPersonName', label: 'Client Contact PersonName', type: 'text'},
     {right: rolePermission.PMO, name: 'ClientContactPersonEmail', label: 'Client Contact Person Email', type: 'text'},
     {right: rolePermission.PMO, name: 'ClientDesignatedPMName', label: 'Client Designated PM Name', type: 'text'},
     {right: rolePermission.PMO, name: 'ClientDesignatedPMEmail', label: 'Client Designated PM Email', type: 'text'},
     {right: rolePermission.PMO, name: 'ProjectManagedBy', label: 'Project Managed By', type: 'text'},
-    {right: rolePermission.PMO, name: 'ProjectName', label: 'Project Name', type: 'text'},
+    {right: rolePermission.PMO, name: 'projName', label: 'Project Name', type: 'text'},
     {right: rolePermission.PMO, name: 'ProjectType', label: 'Project Type', type: 'dd', values: this.projectTypes},
     {right: rolePermission.PMO, name: 'ProjectDomain', label: 'Project Domain', type: 'text'},
     {right: rolePermission.PM, name: 'ProjectBriefDescription', label: 'Project Brief Description', type: 'text'},
@@ -189,7 +192,6 @@ export class ProjectDetailsComponent implements OnInit {
   constructor(
     injector: Injector,
     private projectDetailsService: ProjectDetailsService,
-    private reportService: ReportService,
     private commonService: CommonService,
     private fb: FormBuilder,
     public ref: DynamicDialogRef, 
@@ -235,26 +237,25 @@ export class ProjectDetailsComponent implements OnInit {
     let _this = this;
     this.projectDetailsService.getProjectDetails(this.projectId).subscribe({
       next: (result: any) => {
-      console.log("result => ", result);
-      _this.projectDetail['ProjectName'] = Math.random();
+      _this.projectDetail = result.data[0];
     }, error: (err) => {
-      console.log("err => ", err);
-      _this.projectDetail['ProjectName'] = Math.random();
+      _this.projectDetail['projName'] = Math.random();
     }});
   }
 
-  requestEmployee() {
-    this.refComp = this.dialogService.open(EmployeeDirectoryComponent, { 
-      header: 'Request Employee Allocation',
-      data: {askAllocation: true}
-    });
-  }
+  // requestEmployee() {
+  //   this.refComp = this.dialogService.open(EmployeeDirectoryComponent, { 
+  //     header: 'Request Employee Allocation',
+  //     data: {askAllocation: true}
+  //   });
+  // }
 
   updateWeeklyReport(reportData?: reportModel) {
     if (this.refComp) {
       this.refComp.destroy();
     }
     let obj: any = {};
+    obj['projectId'] = this.projectId;
     if (reportData) {
       obj['reportDetail'] = reportData;
     }
@@ -326,46 +327,9 @@ export class ProjectDetailsComponent implements OnInit {
     return this.projectUpdateForm.get(field) as FormControl;
   }
 
-  // getReports() {
-  //   // if (!this.selectedProjects.length) {
-  //   //   this.pubSubService.publishEvent('toastMessage', {severity: 'error', header: 'Error', body: Messages.Select_project});
-  //   // }else 
-  //   if (this.isRangeInvalid()) {
-  //     this.pubSubService.publishEvent('toastMessage', {severity: 'warning',header: 'Error',body: Messages.Select_daterange});
-  //   }else {
-  //     // if (this.selectedProjects.length && this.rangeDates && this.rangeDates[0] && this.rangeDates[1]) {
-  //       let obj = {'projectIds': [this.projectId], fromDate:  this.rangeDates[0], toDate: this.rangeDates[1]};
-  //       this.reportService.getWeeklyReportList(obj).subscribe({
-  //         next: (success: any) => {
-  //           this.wReportList = success;
-  //         }, error: (err: any) => {
-  //           this.pubSubService.publishEvent('toastMessage', {severity: 'error', header: 'Error', body: err.Message});
-  //         }
-  //       })
-  //     // }
-  //   }
-  // }
-
-  // isRangeInvalid() {
-  //   return !this.rangeDates || (this.rangeDates && (!this.rangeDates[0] || !this.rangeDates[1]))
-  // }
-
-  // checkRangeValidity() {
-  //   if (this.isRangeInvalid()) {
-  //     this.pubSubService.publishEvent('toastMessage', {severity: 'warning',header: 'Error',body: Messages.Select_daterange});
-  //   }
-  // }
-
-  // showWeeklySubmittedReport(report: {name: string, id: string}) {
-  //   this.reportService.getReportById(report.id).subscribe({
-  //     next: (success) => {
-  //       this.updateWeeklyReport(success);
-  //     },
-  //     error: (err) => {
-  //       this.pubSubService.publishEvent('toastMessage', {severity: 'warning', header: 'Warning', body: err.message});
-  //     }
-  //   })
-  // }
+  getProjectType(projType: any) {
+    return this.possibleProjectTypes.filter((obj) => {return obj.id == projType})[0]?.description;
+  }
 
   editOtherDetails() {
     this.editMode = true;

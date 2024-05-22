@@ -5,6 +5,7 @@ export enum Constants {
     Empty_String = "",
     InitialRowId = '-1',
     Form_Invalid = 'INVALID',
+    CurrentUser = 'currentUser',
     AccessToken = 'access_token',
     UnauthorizedAccessEvent = 'unAuthorizedAccess',
     AccessProjectFromMenuEvent = 'accessProjectFromMenuEvent',
@@ -110,3 +111,51 @@ export const rolePermission = {
     PM: "2",
     PMO: "3"
 }
+
+export const possibleProjectTypes = [
+    {id: "1", description: "TnM"},
+    {id: "2", description: "Managed Service Support"},
+    {id: "3", description: "Maintenance"},
+    {id: "4", description: "Fixed Cost"},
+    {id: "5", description: "Product Dev"},
+    {id: "6", description: "Administrative Project"},
+    {id: "7", description: "IT Support"}
+]
+
+export const empCols = [
+    { field: 'projName', header: 'Project Name' },
+    { field: 'manager', header: 'Manager' },
+    { field: 'teamSize', header: 'Team Size' },
+    { field: 'phase', header: 'Phase' },
+    { field: 'allocation', header: 'Allocation' }
+];
+
+export const managerCols = [
+    { field: 'code', header: 'Project Code' },
+    { field: 'client', header: 'Client Name' },
+    { field: 'projName', header: 'Project Name' },
+    { field: 'phase', header: 'Phase' },
+    { field: 'teamSize', header: 'Team Size' },
+];
+export const pmoCols = [
+    { field: 'code', header: 'Project Code' },
+    { field: 'client', header: 'Client Name' },
+    { field: 'projName', header: 'Project Name' },
+    { field: 'phase', header: 'Phase' },
+    { field: 'projectStartDate', header: 'Project Start Date' },
+    { field: 'projectCloserDate', header: 'Project End Date' },
+    { field: 'issueDate', header: 'Issue Date' },
+    { field: 'projected_hours', header: 'Projected Hours' },
+    { field: 'actual_hours', header: 'Actual Hours' },
+    { field: 'onsite_manager', header: 'Onsite Manager' },
+    { field: 'offsite_manager', header: 'Offsite Manager' },
+];
+export const myDummyProjects = [
+    {id: 1, code: 'p1', projName: 'ABC', projectStartDate: '16/04/24', projectCloserDate: '16/11/24', issueDate: '01/04/24', projected_hours: '3500', actual_hours: '3000', onsite_manager: 'abcd', offsite_manager: 'xyzz', manager: 'XYZ', client: 'XYZ', teamSize: 8, phase: 'testing', allocation: '60%'},
+    {id: 2, code: 'p2', projName: 'ABC', projectStartDate: '16/04/24', projectCloserDate: '16/11/24', issueDate: '01/04/24', projected_hours: '3500', actual_hours: '3000', onsite_manager: 'abcd', offsite_manager: 'xyzz', manager: 'XYZ', client: 'XYZ', teamSize: 8, phase: 'testing', allocation: '60%'},
+    {id: 3, code: 'p3', projName: 'ABC', projectStartDate: '16/04/24', projectCloserDate: '16/11/24', issueDate: '01/04/24', projected_hours: '3500', actual_hours: '3000', onsite_manager: 'abcd', offsite_manager: 'xyzz', manager: 'XYZ', client: 'XYZ', teamSize: 8, phase: 'testing', allocation: '60%'},
+    {id: 4, code: 'p4', projName: 'ABC', projectStartDate: '16/04/24', projectCloserDate: '16/11/24', issueDate: '01/04/24', projected_hours: '3500', actual_hours: '3000', onsite_manager: 'abcd', offsite_manager: 'xyzz', manager: 'XYZ', client: 'XYZ', teamSize: 8, phase: 'testing', allocation: '60%'},
+    {id: 5, code: 'p5', projName: 'ABC', projectStartDate: '16/04/24', projectCloserDate: '16/11/24', issueDate: '01/04/24', projected_hours: '3500', actual_hours: '3000', onsite_manager: 'abcd', offsite_manager: 'xyzz', manager: 'XYZ', client: 'XYZ', teamSize: 8, phase: 'testing', allocation: '60%'},
+    {id: 6, code: 'p6', projName: 'ABC', projectStartDate: '16/04/24', projectCloserDate: '16/11/24', issueDate: '01/04/24', projected_hours: '3500', actual_hours: '3000', onsite_manager: 'abcd', offsite_manager: 'xyzz', manager: 'XYZ', client: 'XYZ', teamSize: 8, phase: 'testing', allocation: '60%'},
+    {id: 7, code: 'p7', projName: 'ABC', projectStartDate: '16/04/24', projectCloserDate: '16/11/24', issueDate: '01/04/24', projected_hours: '3500', actual_hours: '3000', onsite_manager: 'abcd', offsite_manager: 'xyzz', manager: 'XYZ', client: 'XYZ', teamSize: 8, phase: 'testing', allocation: '60%'}
+];

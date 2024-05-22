@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
 import { ResourceSheetComponent } from './resource-sheet.component';
 import { RouterModule, Routes } from '@angular/router';
@@ -19,7 +19,6 @@ const routes: Routes= [
   imports: [
     CommonModule,
     FormsModule,
-    ReactiveFormsModule,
     CalendarModule,
     MultiSelectModule,
     DropdownModule,

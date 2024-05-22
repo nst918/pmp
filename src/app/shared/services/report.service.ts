@@ -19,7 +19,7 @@ export class ReportService {
     ) { }
   
   submitWeeklyReport(body: any) {
-    return this.http.post(this.endPointService.WeeklyReport, body)
+    return this.http.post(this.endPointService.CreateProjectStatus, body)
     .pipe(
       timeout(ModuleConstants.apiTimeout),
       map((res) => this.commonUtilsProvider.extractData(res)),
@@ -27,7 +27,7 @@ export class ReportService {
     );
   }
 
-  getWeeklyReportList(body: {projectIds: Array<string>, fromDate: Date, toDate: Date}) {
+  getWeeklyReportList(body: {csvProjectIds: Array<number>, userId: Number, fromDate?: Date, toDate?: Date}) {
     return this.http.get(this.endPointService.GetWeeklyReportList + '?' + this.commonUtilsProvider.serialize(body))
     .pipe(
       timeout(ModuleConstants.apiTimeout),
@@ -36,17 +36,8 @@ export class ReportService {
     );
   }
   
-  getWeeklyReportPMO(body: {projectIds: Array<string>, fromDate?: Date, toDate?: Date, tillDate?: Date}) {
-    return this.http.get(this.endPointService.GetWeeklyReportList + '?' + this.commonUtilsProvider.serialize(body))
-    .pipe(
-      timeout(ModuleConstants.apiTimeout),
-      map((res) => this.commonUtilsProvider.extractData(res)),
-      catchError((err) => this.commonUtilsProvider.catchError(err))
-    );
-  }
-  
-  getReportById(id: string) {
-    return this.http.get(this.endPointService.GetWeeklyReport)
+  getReportById(body: {ProjectStatusId: string}) {
+    return this.http.get(this.endPointService.GetWeeklyReport + '?' + this.commonUtilsProvider.serialize(body))
     .pipe(
       timeout(ModuleConstants.apiTimeout),
       map((res) => this.commonUtilsProvider.extractData(res)),

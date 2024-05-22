@@ -11,7 +11,8 @@ import { CommonUtilsService } from './common-utils.service';
 })
 
 export class CommonService {
-  currentUserRole: string= rolePermission.EMP;
+  currentUserRole: string= rolePermission.PM;
+  projectList: Array<{}>= [];
   httpHeaders = new HttpHeaders({'Content-type': 'application/json'});
   constructor(
     private http:BaseHttpService,
@@ -27,12 +28,29 @@ export class CommonService {
   }
 
   getEmployees() {
-    return this.http.get(this.endPointService.GetEmployees)
+    return this.http.get(this.endPointService.GetAllEmployees)
     .pipe(
       timeout(ModuleConstants.apiTimeout),
       map((res) => this.commonUtilsProvider.extractData(res)),
       catchError((err) => this.commonUtilsProvider.catchError(err))
     );
+  }
+  
+  getUserProjects(empId: string) {
+    empId = '143';
+    return this.http.get(`${this.endPointService.GetAllProjects}?employeeId=${empId}`).pipe(
+      timeout(ModuleConstants.apiTimeout),
+      map((res) => this.commonUtilsProvider.extractData(res)),
+      catchError((err) => this.commonUtilsProvider.catchError(err))
+    );
+  }
+
+  getProjectList() {
+    return this.projectList;
+  }
+
+  setProjectList(list: Array<{}>) {
+    this.projectList = list;
   }
 
 }

@@ -10,6 +10,9 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { CommonModule } from '@angular/common';
 import { CalendarModule } from 'primeng/calendar';
+import { DropdownModule } from 'primeng/dropdown';
+import { Constants } from '../../../core/constants/constants';
+import { StorageProvider } from '../../../core/http/storage-service';
 
 interface AutoCompleteCompleteEvent {
   originalEvent: Event;
@@ -21,11 +24,13 @@ interface AutoCompleteCompleteEvent {
   selector: 'app-employee-directory',
   templateUrl: './employee-directory.component.html',
   styleUrls: ['./employee-directory.component.scss'],
-  imports: [AutoCompleteModule, InputNumberModule, FormsModule, ReactiveFormsModule, CommonModule, CalendarModule]
+  imports: [AutoCompleteModule, InputNumberModule, FormsModule, ReactiveFormsModule, CommonModule, CalendarModule, DropdownModule]
 })
+
 export class EmployeeDirectoryComponent implements OnInit {
   @Output() selectedEmployee = new EventEmitter<any>;
   employeeList: any[];
+  empDetails: any;
   selectedEmp: any;
   filteredEmp: any[];
 
@@ -35,23 +40,37 @@ export class EmployeeDirectoryComponent implements OnInit {
   empForm: FormGroup;
 
   instance: DynamicDialogComponent | undefined;
+
+  projectsList: Array<{}> = [
+    // {projectId: 'p1', name: 'LivaNova'},
+    // {projectId: 'p2', name: 'SCA'},
+    // {projectId: 'p3', name: 'Multiplier'},
+    // {projectId: 'p4', name: 'DOE Askfood-BOH'},
+    // {projectId: 'p5', name: 'DOE Askfood-AA'},
+    // {projectId: 'p6', name: 'DOE Askfood-WHAM'},
+    // {projectId: 'p7', name: 'Protrack'}
+  ];
   constructor(
     private commonService: CommonService,
     private employeeService: EmployeeService,
     public ref: DynamicDialogRef, 
     public fb: FormBuilder, 
     private dialogService: DialogService,
-    private pubSubService: NgxPubSubService
+    private pubSubService: NgxPubSubService,
+    private storageProvider: StorageProvider,
   ) {
     this.instance = this.dialogService.getInstance(this.ref);
 
     this.empForm = this.fb.group({
+      projectId: ['', Validators.required],
       selectedEmp: ['', Validators.required],
       comment: [],
       allocationPercent: ['', Validators.required],
       fromDate: ['', Validators.required],
       tillDate: ['', Validators.required]
     });
+
+    this.empDetails = this.storageProvider.getSessionStorageData(Constants.CurrentUser);
   }
 
   /**
@@ -59,16 +78,28 @@ export class EmployeeDirectoryComponent implements OnInit {
    * @returns promise wether user choose ok or cancel for the confirmation dialog
   */
   ngOnInit() {
-    if (this.instance && this.instance.data) {
-      this.askAllocation = this.instance.data['askAllocation'];
-    }
     this.commonService.getEmployees().subscribe({
       next: (data: any) => {
-        this.employeeList = data;
+        this.employeeList = data.data;
       },error: (err: any) => {
         console.log(err);
       }
     })
+    
+    if (this.commonService.getProjectList().length) {
+      this.projectsList = this.commonService.getProjectList();
+    }else {
+      this.commonService.getUserProjects(this.empDetails.id).subscribe({
+        next: (success) => {
+          // console.log("success => ", success);
+          this.projectsList = success.data;
+          this.commonService.setProjectList(success.data);
+        },
+        error: (err) => {
+          console.log("Err => ", err);
+        },
+      })
+    }
   }
 
   filterEmp(event: AutoCompleteCompleteEvent) {

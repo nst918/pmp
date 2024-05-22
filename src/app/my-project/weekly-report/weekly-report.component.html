@@ -3,8 +3,9 @@
     <form [formGroup]="reportForm">
       <div class="row mb-4">
         <div class="col-12 fw-bolder bg-gray">Key Project Updates</div>
-        <textarea class="w-100" formControlName="description"></textarea>
-        <div *ngIf = "(reportForm.get('description')?.touched || isSubmitted) && reportForm.get('description')?.invalid" class="text-danger"><small>This is required.</small></div>
+        <textarea class="w-100" formControlName="keyProjectUpdates"></textarea>
+        <app-form-field-error class="p-0" [_control]="reportForm.get('keyProjectUpdates')" [submitted]="isSubmitted">
+        </app-form-field-error>
       </div>
       <div class="row mb-4">
         <div class="col-12 fw-bolder bg-gray">
@@ -21,15 +22,18 @@
             [formGroupName]="i">
             <div class="col-6 p-2 border">
               <input type="text" pInputText class="w-100" formControlName="description"/>
-              <div *ngIf = "showErr('dependencies', i, 'description')?.invalid && (showErr('dependencies', i, 'description')?.touched || isAddingNewDependency || isSubmitted)" class="text-danger"><small>This is required.</small></div>
+              <app-form-field-error [_control]="showErr('dependencies', i, 'description')" [submitted]="isSubmitted">
+              </app-form-field-error>
             </div>
             <div class="col-3 p-2 border-top border-end border-bottom">
               <input type="text" pInputText class="w-100" formControlName="owner"/>
-              <div *ngIf = "showErr('dependencies', i, 'owner')?.invalid && (showErr('dependencies', i, 'owner')?.touched || isAddingNewDependency || isSubmitted)" class="text-danger"><small>This is required.</small></div>
+              <app-form-field-error [_control]="showErr('dependencies', i, 'owner')" [submitted]="isSubmitted">
+              </app-form-field-error>
             </div>
             <div class="col-2 p-2 border-top border-end border-bottom">
-               <p-calendar [maxDate]="maxDate" class="w-100" formControlName="etd"></p-calendar>
-              <div *ngIf = "showErr('dependencies', i, 'etd')?.invalid && (showErr('dependencies', i, 'etd')?.touched || isAddingNewDependency || isSubmitted)" class="text-danger"><small>This is required.</small></div>
+              <p-calendar [maxDate]="maxDate" class="w-100" formControlName="etd"></p-calendar>
+              <app-form-field-error [_control]="showErr('dependencies', i, 'etd')" [submitted]="isSubmitted">
+              </app-form-field-error>
             </div>
 
             <div class="col-1 position-relative">
@@ -41,7 +45,7 @@
       <div class="row mb-4">
         <div class="col-12 fw-bolder bg-gray">
           Top Risk/Issue
-          <button type="button" class="btn btn-link float-end" (click)="addFormControl('riskIssue')">+ Add Risk/Issue</button>
+          <button type="button" class="btn btn-link float-end" (click)="addFormControl('topRiskIssue')">+ Add Risk/Issue</button>
         </div>
         <div class="row">
           <div class="col-2 fw-bolder border">Rik/Issue</div>
@@ -50,32 +54,37 @@
           <div class="col-2 fw-bolder border-top border-end border-bottom">Priority</div>
           <div class="col-2 fw-bolder border-top border-end border-bottom">ETD</div>
         </div>
-        <div class="row" formArrayName="riskIssue">
-          <ng-container class="row" *ngFor="let dep of getControls('riskIssue')['controls']; let i = index"
+        <div class="row" formArrayName="topRiskIssue">
+          <ng-container class="row" *ngFor="let dep of getControls('topRiskIssue')['controls']; let i = index"
             [formGroupName]="i">
             <div class="col-2 p-2 border">
-              <input type="text" pInputText class="w-100" formControlName="risk"/>
-              <div *ngIf = "showErr('riskIssue', i, 'risk')?.invalid && (showErr('riskIssue', i, 'risk')?.touched || isAddingNewRisk || isSubmitted)" class="text-danger"><small>This is required.</small></div>
+              <input type="text" pInputText class="w-100" formControlName="riskIssue"/>
+              <app-form-field-error [_control]="showErr('topRiskIssue', i, 'riskIssue')" [submitted]="isSubmitted">
+              </app-form-field-error>
             </div>
             <div class="col-3 p-2 border-top border-end border-bottom">
               <input type="text" pInputText class="w-100" formControlName="description"/>
-              <div *ngIf = "showErr('riskIssue', i, 'description')?.invalid && (showErr('riskIssue', i, 'description')?.touched || isAddingNewRisk || isSubmitted)" class="text-danger"><small>This is required.</small></div>
+              <app-form-field-error [_control]="showErr('topRiskIssue', i, 'description')" [submitted]="isSubmitted">
+              </app-form-field-error>
             </div>
             <div class="col-2 p-2 border">
               <input type="text" pInputText class="w-100" formControlName="owner"/>
-              <div *ngIf = "showErr('riskIssue', i, 'owner')?.invalid && (showErr('riskIssue', i, 'owner')?.touched || isAddingNewRisk || isSubmitted)" class="text-danger"><small>This is required.</small></div>
+              <app-form-field-error [_control]="showErr('topRiskIssue', i, 'owner')" [submitted]="isSubmitted">
+              </app-form-field-error>
             </div>
             <div class="col-2 p-2 border-top border-end border-bottom">
               <input type="text" pInputText class="w-100" formControlName="priority"/>
-              <div *ngIf = "showErr('riskIssue', i, 'priority')?.invalid && (showErr('riskIssue', i, 'priority')?.touched || isAddingNewRisk || isSubmitted)" class="text-danger"><small>This is required.</small></div>
+              <app-form-field-error [_control]="showErr('topRiskIssue', i, 'priority')" [submitted]="isSubmitted">
+              </app-form-field-error>
             </div>
             <div class="col-2 p-2 border-top border-end border-bottom">
-               <p-calendar [maxDate]="maxDate" class="w-100" formControlName="etd"></p-calendar>
-              <div *ngIf = "showErr('riskIssue', i, 'etd')?.invalid && (showErr('riskIssue', i, 'etd')?.touched || isAddingNewRisk || isSubmitted)" class="text-danger"><small>This is required.</small></div>
+              <p-calendar [maxDate]="maxDate" class="w-100" formControlName="etd"></p-calendar>
+              <app-form-field-error [_control]="showErr('topRiskIssue', i, 'etd')" [submitted]="isSubmitted">
+              </app-form-field-error>
             </div>
 
             <div class="col-1 position-relative">
-              <i class="fa-solid fa-xmark" (click)="removeOrClearEmail('riskIssue', i)"></i>
+              <i class="fa-solid fa-xmark" (click)="removeOrClearEmail('topRiskIssue', i)"></i>
             </div>
           </ng-container>
         </div>
@@ -83,31 +92,34 @@
       <div class="row mb-4">
         <div class="col-12 fw-bolder bg-gray">
           Next Steps
-          <button type="button" class="btn btn-link float-end" (click)="addFormControl('nextStep')">+ Add Dependency</button>
+          <button type="button" class="btn btn-link float-end" (click)="addFormControl('nextSteps')">+ Add Dependency</button>
         </div>
         <div class="row">
           <div class="col-6 fw-bolder border">Description</div>
           <div class="col-3 fw-bolder border-top border-end border-bottom">Owner</div>
           <div class="col-2 fw-bolder border-top border-end border-bottom">ETD</div>
         </div>
-        <div class="row" formArrayName="nextStep">
-          <ng-container class="row" *ngFor="let dep of getControls('nextStep')['controls']; let i = index"
+        <div class="row" formArrayName="nextSteps">
+          <ng-container class="row" *ngFor="let dep of getControls('nextSteps')['controls']; let i = index"
             [formGroupName]="i">
             <div class="col-6 p-2 border">
               <input type="text" pInputText class="w-100" formControlName="description"/>
-              <div *ngIf = "showErr('nextStep', i, 'description')?.invalid && (showErr('nextStep', i, 'description')?.touched || isAddingNewStep || isSubmitted)" class="text-danger"><small>This is required.</small></div>
+              <app-form-field-error [_control]="showErr('nextSteps', i, 'description')" [submitted]="isSubmitted">
+              </app-form-field-error>
             </div>
             <div class="col-3 p-2 border-top border-end border-bottom">
               <input type="text" pInputText class="w-100" formControlName="owner"/>
-              <div *ngIf = "showErr('nextStep', i, 'owner')?.invalid && (showErr('nextStep', i, 'owner')?.touched || isAddingNewStep || isSubmitted)" class="text-danger"><small>This is required.</small></div>
+              <app-form-field-error [_control]="showErr('nextSteps', i, 'owner')" [submitted]="isSubmitted">
+              </app-form-field-error>
             </div>
             <div class="col-2 p-2 border-top border-end border-bottom">
-               <p-calendar [maxDate]="maxDate" class="w-100" formControlName="etd"></p-calendar>
-              <div *ngIf = "showErr('nextStep', i, 'etd')?.invalid && (showErr('nextStep', i, 'etd')?.touched || isAddingNewStep || isSubmitted)" class="text-danger"><small>This is required.</small></div>
+              <p-calendar [maxDate]="maxDate" class="w-100" formControlName="etd"></p-calendar>
+              <app-form-field-error [_control]="showErr('nextSteps', i, 'etd')" [submitted]="isSubmitted">
+              </app-form-field-error>
             </div>
 
             <div class="col-1 position-relative">
-              <i class="fa-solid fa-xmark" (click)="removeOrClearEmail('nextStep', i)"></i>
+              <i class="fa-solid fa-xmark" (click)="removeOrClearEmail('nextSteps', i)"></i>
             </div>
           </ng-container>
         </div>
@@ -115,23 +127,31 @@
       <div class="row mb-4">
         <div class="col-6 p-1 fw-bolder bg-gray">
           RAG Status<br> 
-          <p-dropdown formControlName="ragStatus" [options]="ragStatus"
-            placeholder="Select RAG Status"></p-dropdown>
+          <p-dropdown formControlName="status" [options]="ragStatus" optionLabel="label" optionValue="value"
+            placeholder="Select RAG Status"></p-dropdown><br>
+          <app-form-field-error class="fw-normal" [_control]="reportForm.get('status')" [submitted]="isSubmitted">
+          </app-form-field-error>
         </div>
         <div class="col-6 p-1 fw-bolder bg-gray">
           RAG Schedule<br> 
-          <p-dropdown formControlName="ragSchedule" [options]="ragSchedule"
-            placeholder="Select RAG Schedule"></p-dropdown>
+          <p-dropdown formControlName="schedule" [options]="ragSchedule" optionLabel="label" optionValue="value"
+            placeholder="Select RAG Schedule"></p-dropdown><br>
+          <app-form-field-error class="fw-normal" [_control]="reportForm.get('schedule')" [submitted]="isSubmitted">
+          </app-form-field-error>
         </div>
         <div class="col-6 p-1 fw-bolder bg-gray">
           RAG Scope<br> 
-          <p-dropdown formControlName="ragScope" [options]="ragScope"
-            placeholder="Select RAG Scope"></p-dropdown>
+          <p-dropdown formControlName="scope" [options]="ragScope" optionLabel="label" optionValue="value"
+            placeholder="Select RAG Scope"></p-dropdown><br>
+          <app-form-field-error class="fw-normal" [_control]="reportForm.get('scope')" [submitted]="isSubmitted">
+          </app-form-field-error>
         </div>
         <div class="col-6 p-1 fw-bolder bg-gray">
           RAG Effort/Cost<br> 
-          <p-dropdown formControlName="ragEffort" [options]="ragEffort"
-            placeholder="Select RAG Effort"></p-dropdown>
+          <p-dropdown formControlName="effortCost" [options]="ragEffort" optionLabel="label" optionValue="value"
+            placeholder="Select RAG Effort"></p-dropdown><br>
+          <app-form-field-error class="fw-normal" [_control]="reportForm.get('effortCost')" [submitted]="isSubmitted">
+          </app-form-field-error>
         </div>
       </div>
     </form>

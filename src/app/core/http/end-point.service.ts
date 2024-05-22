@@ -7,17 +7,25 @@ export class EndPointService {
   /** User Attendance */
   GetAttendance = 'Attendance/Attendance/GetAttendance';
   
-  /** Project Details */
-  GetProjects = 'User/GetProjects';
-  GetProjectDetails = 'User/GetProjectDetails';
+  /** Get Project listing */
+  GetAllProjects = 'ProjectManagement/GetAllProjectsByEmployeeId';
+  /** Get project detail */
+  GetProjects = 'ProjectManagement/GetProjectsById';
+  // GetProjectDetails = 'ProjectManagement/GetEmployeeProjects';
   
-  GetEmployees = 'User/GetEmployees';
+  /** Get employees listing */
+  GetAllEmployees = 'ProjectManagement/GetAllEmployees';
   
   RequestEmployeesAllocation = 'User/RequestEmployeesAllocation';
-  WeeklyReport = 'User/WeeklyReport';
-  GetWeeklyReportList = 'User/GetWeeklyReportList';
-  GetWeeklyReport = 'User/GetWeeklyReport';
-  GetWeeklyReportPMO = 'User/GetWeeklyReportPMO';
+  
+  /** Post weekly status report */
+  CreateProjectStatus = 'ProjectManagement/CreateProjectStatus';
+
+  /** Get submitted weekly report */
+  GetWeeklyReportList = 'ProjectManagement/GetAllProjectStatusReports';
+
+  /** Get Project status by id */
+  GetWeeklyReport = 'ProjectManagement/GetProjectStatus';
   
   GetRequests = 'GetRequests';
 }

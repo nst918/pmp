@@ -21,7 +21,7 @@
       <li><a (click)="sidebarVisible1 = false;" routerLink="/projects" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Project Management</a></li>
       <li *ngIf = "getRole() != rolePermission.EMP"><a (click)="sidebarVisible1 = false;" routerLink="/report" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Project Report</a></li>
       <li *ngIf = "getRole() == rolePermission.PMO"><a (click)="sidebarVisible1 = false;" routerLink="/requests" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Approve/Decline Requests</a></li>
-      <li *ngIf = "getRole() == rolePermission.PMO"><a (click)="sidebarVisible1 = false;" routerLink="/resource-sheet" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Approve/Decline Requests</a></li>
+      <li *ngIf = "getRole() != rolePermission.EMP"><a (click)="sidebarVisible1 = false;" routerLink="/resource-sheet" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Resource Sheet</a></li>
     </ul>
   </p-sidebar>
 </header>

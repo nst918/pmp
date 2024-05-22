@@ -10,7 +10,8 @@ declare var MiniProfiler: any;
 @Injectable()
 export class AuthHeaderInterceptor implements HttpInterceptor {
   constructor(
-    private ngZone: NgZone) {
+    private ngZone: NgZone
+    ) {
   }
   errorDialogRef: any;
 
@@ -21,20 +22,21 @@ export class AuthHeaderInterceptor implements HttpInterceptor {
    * @returns 
    */
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const accessToken = JSON.parse(sessionStorage[Constants.AccessToken]);
+    const accessToken = sessionStorage.getItem(Constants.AccessToken);
     const ignoredStatuses = request.context.get(IGNORED_STATUSES);
     if (accessToken) {
       // merge the bearer token into the existing headers
       request = request.clone({
         setHeaders: {
-          Authorization: 'Bearer ' + accessToken.accessToken,
+          Authorization: 'Bearer ' + accessToken,
         }
       });
     }
 
     return next.handle(request).pipe(tap({
-      next: (response) => this.interceptNext(response),
-      error: (error: HttpErrorResponse) => {
+      next: (response) => {
+        this.interceptNext(response)
+      },error: (error: HttpErrorResponse) => {
         if (ignoredStatuses?.includes(error.status)) {
           // rethrow error to be catched locally
           return throwError(() => error);

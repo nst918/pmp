@@ -6,6 +6,8 @@ import { ReportService } from '../../shared/services/report.service';
 import { NgxPubSubService } from '@pscoped/ngx-pub-sub';
 import { Messages } from '../../core/messages/messages';
 import { reportModel } from '../../core/models/api-status';
+import { StorageProvider } from '../../core/http/storage-service';
+import { Constants } from '../../core/constants/constants';
 
 @Component({
   selector: 'weekly-report',
@@ -25,6 +27,8 @@ export class WeeklyReportComponent implements OnInit {
   reportForm: FormGroup;
   instance: DynamicDialogComponent | undefined;  
   isSubmitted: boolean= false;
+  projectId: any= '';
+  empDetails: any;
   
   isAddingNewDependency: boolean= false;
   isAddingNewRisk: boolean= false;
@@ -34,33 +38,82 @@ export class WeeklyReportComponent implements OnInit {
 
   reportDetail: reportModel;
 
-  ragStatus: Array<string>= ['Status-R', 'Status-A', 'Status-G'];
-  ragSchedule: Array<string>= ['Schedule-R', 'Schedule-A', 'Schedule-G'];
-  ragScope: Array<string>= ['Scope-R', 'Scope-A', 'Scope-G'];
-  ragEffort: Array<string>= ['Effort-R', 'Effort-A', 'Effort-G'];
+  ragStatus: Array<{}>= [
+    {label: 'Status-R', value: 1}, 
+    {label: 'Status-A', value: 2}, 
+    {label: 'Status-G', value: 3}];
+  ragSchedule: Array<{}>= [
+    {label: 'Schedule-R', value: 1}, 
+    {label: 'Schedule-A', value: 2}, 
+    {label: 'Schedule-G', value: 3}];
+  ragScope: Array<{}>= [
+    {label: 'Scope-R', value: 1}, 
+    {label: 'Scope-A', value: 2}, 
+    {label: 'Scope-G', value: 3}];
+  ragEffort: Array<{}>= [
+    {label: 'Effort-R', value: 1}, 
+    {label: 'Effort-A', value: 2}, 
+    {label: 'Effort-G', value: 3}];
+
+  reportSchema= {
+    "projectId": 0,
+    "keyProjectUpdates": "string",
+    "schedule": 0,
+    "effortCost": 0,
+    "scope": 0,
+    "status": 0,
+    "dependencies": [
+      {
+        "description": "string",
+        "owner": "string",
+        "etd": "string"
+      }
+    ],
+    "topRiskIssue": [
+      {
+        "riskIssue": "string",
+        "description": "string",
+        "owner": "string",
+        "priority": "string",
+        "etd": "string"
+      }
+    ],
+    "nextSteps": [
+      {
+        "description": "string",
+        "owner": "string",
+        "etd": "string"
+      }
+    ]
+  }
 
   constructor(
     private reportService: ReportService,
     private fb: FormBuilder,
     public ref: DynamicDialogRef, 
     private dialogService: DialogService,
+    private storageProvider: StorageProvider,
     private pubSubService: NgxPubSubService
   ) {
     this.instance = this.dialogService.getInstance(this.ref);
     this.reportForm = this.fb.group({
-      description: ['', Validators.required],
-      ragStatus: ['', Validators.required],
-      ragSchedule: ['', Validators.required],
-      ragScope: ['', Validators.required],
-      ragEffort: ['', Validators.required],
+      keyProjectUpdates: ['', Validators.required],
+      status: ['', Validators.required],
+      schedule: ['', Validators.required],
+      scope: ['', Validators.required],
+      effortCost: ['', Validators.required],
       dependencies: this.fb.array([]),
-      riskIssue: this.fb.array([]),
-      nextStep: this.fb.array([])
+      topRiskIssue: this.fb.array([]),
+      nextSteps: this.fb.array([])
     });
+    this.empDetails = this.storageProvider.getSessionStorageData(Constants.CurrentUser);
   }
 
   ngOnInit(): void {
     if (this.instance && this.instance.data) {
+      if (this.instance.data['projectId']) {
+        this.projectId = this.instance.data['projectId'];
+      }
       if (this.instance.data['reportDetail']) {
         this.reportDetail = this.instance.data['reportDetail'];
         this.reportForm.patchValue(this.reportDetail);
@@ -89,7 +142,7 @@ export class WeeklyReportComponent implements OnInit {
           this.isAddingNewDependency =true;
         }
         break;
-      case 'riskIssue':
+      case 'topRiskIssue':
         if (control.valid) {
           this.isAddingNewRisk = false;
           control.push(this.createRiskFormGroup());
@@ -97,7 +150,7 @@ export class WeeklyReportComponent implements OnInit {
           this.isAddingNewRisk = true;
         }
         break;
-      case 'nextStep':
+      case 'nextSteps':
         if (control.valid) {
           this.isAddingNewStep = false;
           control.push(this.createDependencyFormGroup());
@@ -130,7 +183,7 @@ export class WeeklyReportComponent implements OnInit {
 
   createRiskFormGroup(): FormGroup {
     return this.fb.group({
-      'risk': ['', Validators.required],
+      'riskIssue': ['', Validators.required],
       'description': ['', Validators.required],
       'owner': ['', Validators.required],
       'priority': ['', Validators.required],
@@ -140,8 +193,13 @@ export class WeeklyReportComponent implements OnInit {
 
   submitReport() {
     this.isSubmitted = true;
+    let obj = JSON.parse(JSON.stringify(this.reportForm.value));
+    obj['projectId'] = parseInt(this.projectId);
+    obj['submittedBy'] = this.empDetails.id;
+    obj['submittedBy'] = 134;
+    obj['submitDate'] = new Date();
     if (this.reportForm.valid) {
-      this.reportService.submitWeeklyReport(this.reportForm.value).subscribe({
+      this.reportService.submitWeeklyReport(obj).subscribe({
         next: (success) => {
           this.isSubmitted = false;
           this.instance?.close();

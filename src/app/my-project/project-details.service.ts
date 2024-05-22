@@ -18,17 +18,10 @@ export class ProjectDetailsService {
     private endPointService:EndPointService,
     private commonUtilsProvider:CommonUtilsService,
     ) { }
-  
-  getMyProjects() {
-    return this.http.get(this.endPointService.GetProjects).pipe(
-      timeout(ModuleConstants.apiTimeout),
-      map((res) => this.commonUtilsProvider.extractData(res)),
-      catchError((err) => this.commonUtilsProvider.catchError(err))
-    );
-  }
 
   getProjectDetails(projectId: string) {
-    return this.http.get(`${this.endPointService.GetProjectDetails}/${projectId}`).pipe(
+    // projectId = '38';
+    return this.http.get(`${this.endPointService.GetProjects}?projectId=${projectId}`).pipe(
       timeout(ModuleConstants.apiTimeout),
       map((res) => this.commonUtilsProvider.extractData(res)),
       catchError((err) => this.commonUtilsProvider.catchError(err))
@@ -36,7 +29,7 @@ export class ProjectDetailsService {
   }
   
   updateProjectDetails(id: string, body: ProjectSummaryIQMSDto) {
-    return this.http.put(`${this.endPointService.GetProjectDetails}/${id}`,body).pipe(
+    return this.http.put(`${this.endPointService.GetProjects}/${id}`,body).pipe(
       timeout(ModuleConstants.apiTimeout),
       map((res) => this.commonUtilsProvider.extractData(res)),
       catchError((err) => this.commonUtilsProvider.catchError(err))

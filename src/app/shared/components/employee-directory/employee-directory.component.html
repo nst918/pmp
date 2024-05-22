@@ -11,21 +11,30 @@
     </p-autoComplete>
   </div>
 
-  <div class="row mb-4" *ngIf = "askAllocation">
-    <label class="col-12">Allocation</label>
-    <p-inputNumber suffix="%" formControlName="allocationPercent" inputId="minmax" mode="decimal" [min]="0" [max]="100"> </p-inputNumber>
+  <div class="row mb-4">
+    <div class="col-6">
+      <label class="col-12">Select Project</label>
+      <p-dropdown formControlName="projectId" [options]="projectsList"
+        placeholder="Select Project" optionLabel="name"
+        optionValue="projectId"></p-dropdown>
+    </div>
+    <div class="col-6">
+      <label class="col-12">Allocation</label>
+      <p-inputNumber suffix="%" formControlName="allocationPercent" inputId="minmax" mode="decimal" [min]="0" [max]="100"> </p-inputNumber>
+    </div>
   </div>
   
   <div class="row mb-4">
-    <label class="col-12">From Date</label>
-    <p-calendar appendTo="body" formControlName="fromDate"></p-calendar>
+    <div class="col-6">
+      <label class="col-12">From Date</label>
+      <p-calendar appendTo="body" formControlName="fromDate"></p-calendar>
+    </div>
+    <div class="col-6">
+      <label class="col-12">Till Date</label>
+      <p-calendar appendTo="body" formControlName="tillDate"></p-calendar>
+    </div>
   </div>
   
-  <div class="row mb-4">
-    <label class="col-12">Till Date</label>
-    <p-calendar appendTo="body" formControlName="tillDate"></p-calendar>
-  </div>
-
   <div class="row mb-4">
     <div class="col-12">Comment</div>
     <div class="col-12">
