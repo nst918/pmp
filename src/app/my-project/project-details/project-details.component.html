@@ -1,12 +1,12 @@
 ﻿<div [@routerTransition]>
-  <p-progressSpinner class="position-center" *ngIf="!projectDetail['projName'], else proDetails" ariaLabel="loading"></p-progressSpinner>
+  <p-progressSpinner class="position-center" *ngIf="!projectDetail['projectName'], else proDetails" ariaLabel="loading"></p-progressSpinner>
 
   <ng-template #proDetails>
 
     <section class="content ms-4 me-4">
       <div class="row">
         <div class="col-12 mb-2">
-          {{ projectDetail.projName }} ({{ projectDetail.pCode }})
+          {{ projectDetail.projectName }} ({{ projectDetail.otherDetails.pCode }})
         </div>
         <div class="col-12 mb-2">
           <div class="row fw-bolder bg-gray position-relative">
@@ -14,7 +14,7 @@
             <button *ngIf = "role == rolePermission.PM" class="btn btn-primary request-btn" (click)="updateWeeklyReport()">Update Weekly Report</button>
           </div>
           <div class="row">
-            <div [innerHTML]="projectDetail.projDesc"></div>
+            <div [innerHTML]="projectDetail.description"></div>
             <div [innerHTML]="projectDetail.scope"></div>
           </div>
         </div>
@@ -37,13 +37,13 @@
                 <div class="col-6">Planned end date:</div>
                 <div class="col-6"></div>
               </div>
-              <div class="col-12">
+              <div class="row">
                 <div class="col-6">Revised start date:</div>
-                <div class="col-6"></div>
+                <div class="col-6">{{projectDetail.metricsDetails.revisedStartDate}}</div>
               </div>
-              <div class="col-12">
+              <div class="row">
                 <div class="col-6">Revised end date:</div>
-                <div class="col-6"></div>
+                <div class="col-6">{{projectDetail.metricsDetails.revisedEndDate}}</div>
               </div>
               <div class="col-12">
                 <div class="col-6">Actual start date:</div>
@@ -105,9 +105,9 @@
             <div *ngIf = "role != rolePermission.EMP" class="col-2 fw-bold">Allocation</div>
           </div>
           <div class="row" *ngFor="let member of projectDetail.teamDetails">
-            <div class="col-6">{{ member.empName }}</div>
-            <div class="col-4">{{member.designation}}</div>
-            <div *ngIf = "role != rolePermission.EMP" class="col-2">{{member.allocation}}%</div>
+            <div class="col-6">{{ member.employeeName }}</div>
+            <div class="col-4">{{member.role}}</div>
+            <!--<div *ngIf = "role != rolePermission.EMP" class="col-2">{{member.allocation}}%</div>-->
           </div>
         </div>
         <div *ngIf = "role != rolePermission.EMP" class="col-12">
@@ -124,8 +124,8 @@
             <div class="row mt-1 mb-1">
               <div class="col-6">Project Type</div>
               <div class="col-6">
-                {{projectDetail.projectType}}
-                {{ getProjectType(projectDetail.projectType) }}
+                {{projectDetail.otherDetails.projectType}}
+                <!--{{ getProjectType(projectDetail.projectType) }}-->
                 <!-- {{ projectDetail.projectType? projectDetail.projectType?.name : '' }} -->
                 <!-- <p-dropdown formControlName="projectType" [options]="projectTypes" optionLabel="name"
                   placeholder="Select Project Type"></p-dropdown> -->
@@ -134,21 +134,21 @@
             <div class="row mt-1 mb-1">
               <div class="col-6">Client Project Sector Type</div>
               <div class="col-6">
-                {{ projectDetail.projectSector }}
+                {{ projectDetail.otherDetails.clientProjectSectorType }}
                 <!-- <input pInputText type="text" class="p-inputtext-sm" formControlName="clientProjectSectorType" /> -->
               </div>
             </div>
             <div class="row mt-1 mb-1">
               <div class="col-6">Project Domain</div>
               <div class="col-6">
-                {{ projectDetail.projectDomain }}
+                {{ projectDetail.otherDetails.projectDomain }}
                 <!-- <input pInputText type="text" class="p-inputtext-sm" formControlName="projectDomain" /> -->
               </div>
             </div>
             <div class="row mt-1 mb-1">
               <div class="col-6">Onsite PM</div>
               <div class="col-6">
-                {{ projectDetail.OnsitePM? projectDetail.OnsitePM?.name : '' }}
+                {{ projectDetail.otherDetails.onsitePM }}
                 <!-- <p-dropdown formControlName="OnsitePM" [options]="onsiteProjectMnagers" optionLabel="name"
                   placeholder="Select"></p-dropdown> -->
               </div>
@@ -156,7 +156,7 @@
             <div class="row mt-1 mb-1">
               <div class="col-6">Offshore PM</div>
               <div class="col-6">
-                {{ projectDetail.OffshorePM? projectDetail.OffshorePM?.name : '' }}
+                {{ projectDetail.otherDetails.offshorePM }}
                 <!-- <p-dropdown formControlName="OffshorePM" [options]="offshoreProjectMnagers" optionLabel="name"
                   placeholder="Select"></p-dropdown> -->
               </div>
@@ -164,7 +164,7 @@
             <div class="row mt-1 mb-1">
               <div class="col-6">Current Phase</div>
               <div class="col-6">
-                <span *ngIf="!editMode">{{ projectDetail.CurrentPhase }}</span>
+                <span *ngIf="!editMode">{{ projectDetail.otherDetails.currentPhase }}</span>
                 <p-dropdown *ngIf="editMode" formControlName="CurrentPhase" [options]="projectPhase"
                   placeholder="Select"></p-dropdown>
               </div>
@@ -172,76 +172,76 @@
             <div class="row mt-1 mb-1">
               <div class="col-6">Project Start Date</div>
               <div class="col-6">
-                <span *ngIf="!editMode">{{ projectDetail.ProjectStartDate | date: 'dd-mm-yyyy' }}</span>
+                <span *ngIf="!editMode">{{ projectDetail.otherDetails.projectStartDate | date: 'dd-MM-yyyy' }}</span>
                 <p-calendar *ngIf="editMode" formControlName="ProjectStartDate"></p-calendar>
               </div>
             </div>
             <div class="row mt-1 mb-1">
               <div class="col-6">Project End Date</div>
               <div class="col-6">
-                <span *ngIf="!editMode">{{ projectDetail.ProjectExpectedEndDate | date: 'dd-mm-yyyy' }}</span>
+                <span *ngIf="!editMode">{{ projectDetail.otherDetails.projectEndDate | date: 'dd-MM-yyyy' }}</span>
                 <p-calendar *ngIf="editMode" formControlName="ProjectExpectedEndDate"></p-calendar>
               </div>
             </div>
             <div class="row mt-1 mb-1">
               <div class="col-6">Project Man Days</div>
               <div class="col-6">
-                <span *ngIf="!editMode">{{ projectDetail.ProjectManDays }} Week(s)</span>
+                <span *ngIf="!editMode">{{ projectDetail.otherDetails.projectManDays }} Week(s)</span>
                 <p-inputNumber *ngIf="editMode" formControlName="ProjectManDays" [min]="1"></p-inputNumber>
               </div>
             </div>
             <div class="row mt-1 mb-1">
               <div class="col-6">Development Methodology</div>
               <div class="col-6">
-                {{ projectDetail.devMethod }}
+                {{ projectDetail.otherDetails.developmentMethodology }}
               </div>
             </div>
             <div class="row mt-1 mb-1">
               <div class="col-6">Account Manager</div>
               <div class="col-6">
-                {{ projectDetail.accountManager }}
+                {{ projectDetail.otherDetails.accountManager }}
               </div>
             </div>
             <div class="row mt-1 mb-1">
               <div class="col-6">Revised Start Date</div>
               <div class="col-6">
-                {{ projectDetail.revisedStartDate }}
+                {{ projectDetail.otherDetails.revisedStartDate }}
               </div>
             </div>
             <div class="row mt-1 mb-1">
               <div class="col-6">Revised End Date</div>
               <div class="col-6">
-                {{ projectDetail.revisedEndDate }}
+                {{ projectDetail.otherDetails.revisedEndDate }}
               </div>
             </div>
             <div class="row mt-1 mb-1">
               <div class="col-6">Projected Hours</div>
               <div class="col-6">
-                {{ projectDetail.projectedHours }}
+                {{ projectDetail.otherDetails.projectedHours }}
               </div>
             </div>
             <div class="row mt-1 mb-1">
               <div class="col-6">Actual Hours</div>
               <div class="col-6">
-                {{ projectDetail.actualHours }}
+                {{ projectDetail.otherDetails.actualHours }}
               </div>
             </div>
             <div class="row mt-1 mb-1">
               <div class="col-6">RAG Schedule</div>
               <div class="col-6">
-                {{ projectDetail.RAGSchedule }}
+                {{ projectDetail.otherDetails.ragSchedule }}
               </div>
             </div>
             <div class="row mt-1 mb-1">
               <div class="col-6">RAG Scope</div>
               <div class="col-6">
-                {{ projectDetail.RAGScope }}
+                {{ projectDetail.otherDetails.ragScope }}
               </div>
             </div>
             <div class="row mt-1 mb-1">
               <div class="col-6">RAG Effort</div>
               <div class="col-6">
-                {{ projectDetail.RAGEffort }}
+                {{ projectDetail.otherDetails.ragEffort }}
               </div>
             </div>
           </form>
