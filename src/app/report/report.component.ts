@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { appModuleAnimation } from '../shared/animations/routerTransition';
-import { ProjectSummaryIQMSDto } from '../core/models/api-status';
+import { ProjectStatusReport } from '../core/models/api-status';
 import { NgxPubSubService } from '@pscoped/ngx-pub-sub';
 import { ReportService } from '../shared/services/report.service';
 import { Messages } from '../core/messages/messages';
@@ -32,7 +32,7 @@ export class ReportComponent implements OnInit, AfterViewInit {
   rangeDates: Date[];
   tillDate: Date = new Date();
   maxDate: Date = new Date();
-  reportData: Array<ProjectSummaryIQMSDto>= [];
+  reportData: Array<ProjectStatusReport>= [];
   wReportData: Array<{projectName: string, reports: Array<{name: string, id: string}>}>= [
     {projectName: 'SCA', reports: [
       {id: 'P1R1', name: 'Submitted on 02 Feb 2024'},
@@ -128,7 +128,7 @@ export class ReportComponent implements OnInit, AfterViewInit {
             let obj = {'userId': userId, 'csvProjectIds': this.selectedProjects, fromDate:  this.commonUtilsService.convertDateStringToMmDdYyyy(this.rangeDates[0]), toDate: this.commonUtilsService.convertDateStringToMmDdYyyy(this.rangeDates[1])};
             this.reportService.getWeeklyReportList(obj).subscribe({
               next: (success: any) => {
-                this.reportData = success;
+                this.reportData = success.data;
               }, error: (err: any) => {
                 this.pubSubService.publishEvent('toastMessage', {severity: 'error', header: 'Error', body: err.Message});
               }
@@ -158,7 +158,7 @@ export class ReportComponent implements OnInit, AfterViewInit {
       this.refComp.destroy();
     }
     let obj: any = {};
-    obj['ProjectStatusId'] = report['ProjectStatusId'];
+    obj['ProjectStatusId'] = report['reportId'];
 
     this.reportService.getReportById(obj).subscribe({
       next: (success: any) => {

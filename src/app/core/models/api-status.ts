@@ -28,6 +28,16 @@ export class ProjectSummaryIQMSDto {
     Remarks: string;
 }
 
+export class ProjectStatusReport {
+    projectName: string;
+    reports: Array<Reports>;
+}
+
+export class Reports {
+    reportId: number;
+    reportName: string;
+}
+
 
 export class reportModel {
     id: string;
