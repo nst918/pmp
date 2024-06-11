@@ -59,13 +59,13 @@
 </p-table>
 
 <div *ngIf = "getRole() == rolePermission.PM" class="row p-5 pt-1 pb-1 ">
-  <ul *ngIf="wReportData.length">
-    <li *ngFor="let data of wReportData;">
+  <ul *ngIf="reportData.length">
+    <li *ngFor="let data of reportData;">
       {{data.projectName}}
       <ng-container *ngIf="data.reports.length">
         <ul *ngFor="let report of data.reports">
           <li>
-            <a href="javascript:void(0)" (click)="showWeeklySubmittedReport(report)">{{ report.name }}</a>
+            <a href="javascript:void(0)" (click)="showWeeklySubmittedReport(report)">{{ report.reportName }}</a>
           </li>
         </ul>
       </ng-container>
