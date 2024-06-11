@@ -72,11 +72,11 @@ const isIE = window.navigator.userAgent.indexOf('MSIE') > -1 || window.navigator
             useClass: AuthHeaderInterceptor,
             multi: true
         },
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: MsalInterceptor,
-            multi: true
-        },
+        // {
+        //     provide: HTTP_INTERCEPTORS,
+        //     useClass: MsalInterceptor,
+        //     multi: true
+        // },
         MsalGuard],
     bootstrap: [AppComponent, MsalRedirectComponent]
 

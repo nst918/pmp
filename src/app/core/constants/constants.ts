@@ -131,24 +131,24 @@ export const empCols = [
 ];
 
 export const managerCols = [
-    { field: 'code', header: 'Project Code' },
-    { field: 'client', header: 'Client Name' },
-    { field: 'projName', header: 'Project Name' },
+    { field: 'projectCode', header: 'Project Code' },
+    { field: 'clientName', header: 'Client Name' },
+    { field: 'projectName', header: 'Project Name' },
     { field: 'phase', header: 'Phase' },
     { field: 'teamSize', header: 'Team Size' },
 ];
 export const pmoCols = [
-    { field: 'code', header: 'Project Code' },
-    { field: 'client', header: 'Client Name' },
-    { field: 'projName', header: 'Project Name' },
+    { field: 'projectCode', header: 'Project Code' },
+    { field: 'clientName', header: 'Client Name' },
+    { field: 'projectName', header: 'Project Name' },
     { field: 'phase', header: 'Phase' },
     { field: 'projectStartDate', header: 'Project Start Date' },
     { field: 'projectCloserDate', header: 'Project End Date' },
     { field: 'issueDate', header: 'Issue Date' },
-    { field: 'projected_hours', header: 'Projected Hours' },
-    { field: 'actual_hours', header: 'Actual Hours' },
-    { field: 'onsite_manager', header: 'Onsite Manager' },
-    { field: 'offsite_manager', header: 'Offsite Manager' },
+    { field: 'projectedHours', header: 'Projected Hours' },
+    { field: 'actualHours', header: 'Actual Hours' },
+    { field: 'onsitePM', header: 'Onsite Manager' },
+    { field: 'offshorePM', header: 'Offsite Manager' },
 ];
 export const myDummyProjects = [
     {id: 1, code: 'p1', projName: 'ABC', projectStartDate: '16/04/24', projectCloserDate: '16/11/24', issueDate: '01/04/24', projected_hours: '3500', actual_hours: '3000', onsite_manager: 'abcd', offsite_manager: 'xyzz', manager: 'XYZ', client: 'XYZ', teamSize: 8, phase: 'testing', allocation: '60%'},

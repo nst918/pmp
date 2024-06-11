@@ -8,7 +8,7 @@
         <div class="row p-1">
           <div class="col-6">Select project</div>
           <div class="col-6">
-            <p-multiSelect [options]="projectsList" placeholder="Select Project" display="chip" [(ngModel)]="selectedProjects" optionLabel="projName" optionValue="pinId"></p-multiSelect>
+            <p-multiSelect [options]="projectsList" placeholder="Select Project" display="chip" [(ngModel)]="selectedProjects" optionLabel="projectName" optionValue="pinId"></p-multiSelect>
           </div>
         </div>
         <div *ngIf = "getRole() == rolePermission.PM" class="row p-1">
